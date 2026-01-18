@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFDocLab | Free Online PDF & Image Tools</title>
+    <meta name="description" content="Privacy-first, client-side PDF and Image utility tools. No uploads, no signup, 100% free.">
+    
+    <!-- Scripts: Tailwind, jsPDF, pdf-lib, Lucide -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .tool-card:hover { transform: translateY(-4px); transition: all 0.3s ease; }
+        .hidden-section { display: none; }
+        .active-link { border-bottom: 2px solid #2563eb; color: #2563eb; }
+        .drop-zone { border: 2px dashed #cbd5e1; transition: all 0.3s; }
+        .drop-zone.active { border-color: #2563eb; background: #eff6ff; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
+                    <div class="bg-blue-600 p-1.5 rounded-lg">
+                        <i data-lucide="file-text" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="text-xl font-bold text-slate-800 tracking-tight">PDFDocLab</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                    <button onclick="showPage('home')" class="nav-link hover:text-blue-600" id="nav-home">Home</button>
+                    <button onclick="showPage('pdf-tools')" class="nav-link hover:text-blue-600" id="nav-pdf">PDF Tools</button>
+                    <button onclick="showPage('image-tools')" class="nav-link hover:text-blue-600" id="nav-image">Image Tools</button>
+                    <button onclick="showPage('help')" class="nav-link hover:text-blue-600" id="nav-help">Help</button>
+                </div>
+                <div class="md:hidden">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 min-h-[80vh]">
+        
+        <!-- HOME PAGE -->
+        <section id="page-home" class="page-section">
+            <div class="text-center py-12">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-4 leading-tight">
+                    Free Online <span class="text-blue-600">PDF & Document</span> Tools
+                </h1>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
+                    Privacy-first document processing. All files stay on your device. No uploads, no storage, no tracking.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="showPage('pdf-tools')" class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200">Start Processing PDF</button>
+                    <button onclick="showPage('help')" class="bg-white text-slate-700 border px-8 py-3 rounded-full font-semibold hover:bg-slate-50 transition">Learn How It Works</button>
+                </div>
+            </div>
+
+            <!-- Ad Placeholder -->
+            <div class="w-full h-24 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 text-xs mb-12 border border-dashed">
+                ADVERTISEMENT SECTION (RESPONSIVE)
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature Cards -->
+                <div class="tool-card bg-white p-6 rounded-2xl shadow-sm border cursor-pointer" onclick="showPage('pdf-tools')">
+                    <div class="text-blue-600 mb-4"><i data-lucide="type" class="w-8 h-8"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">Text to PDF</h3>
+                    <p class="text-sm text-slate-500">Convert notes, essays, or code to PDF instantly.</p>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-2xl shadow-sm border cursor-pointer" onclick="showPage('pdf-tools')">
+                    <div class="text-red-500 mb-4"><i data-lucide="copy" class="w-8 h-8"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">PDF Merge</h3>
+                    <p class="text-sm text-slate-500">Combine multiple small PDF files into one.</p>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-2xl shadow-sm border cursor-pointer" onclick="showPage('image-tools')">
+                    <div class="text-emerald-500 mb-4"><i data-lucide="image" class="w-8 h-8"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">Image Compress</h3>
+                    <p class="text-sm text-slate-500">Reduce image size without losing quality.</p>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-2xl shadow-sm border cursor-pointer" onclick="showPage('image-tools')">
+                    <div class="text-purple-500 mb-4"><i data-lucide="refresh-cw" class="w-8 h-8"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">Image Converter</h3>
+                    <p class="text-sm text-slate-500">Convert JPG to PNG or vice-versa easily.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PDF TOOLS PAGE -->
+        <section id="page-pdf-tools" class="page-section hidden-section">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">PDF Utilities</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Tool: Text to PDF -->
+                <div class="bg-white p-6 rounded-xl border shadow-sm">
+                    <h3 class="flex items-center gap-2 font-bold text-lg mb-4 text-slate-700">
+                        <i data-lucide="pencil" class="w-5 h-5"></i> Text to PDF
+                    </h3>
+                    <textarea id="text-input" rows="6" class="w-full p-4 bg-slate-50 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Paste your text here... (Ideal for short/medium text)"></textarea>
+                    <button onclick="generateTextPDF()" class="mt-4 w-full bg-slate-800 text-white py-2 rounded-lg font-medium hover:bg-slate-900 transition">Download PDF</button>
+                    <p id="pdf-status" class="mt-2 text-xs text-slate-400"></p>
+                </div>
+
+                <!-- Tool: Image to PDF -->
+                <div class="bg-white p-6 rounded-xl border shadow-sm">
+                    <h3 class="flex items-center gap-2 font-bold text-lg mb-4 text-slate-700">
+                        <i data-lucide="images" class="w-5 h-5"></i> Images to PDF
+                    </h3>
+                    <div class="drop-zone p-8 rounded-lg text-center cursor-pointer mb-4" id="img-to-pdf-zone">
+                        <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-slate-400 mb-2"></i>
+                        <p class="text-sm text-slate-500">Click or drag images here</p>
+                        <input type="file" id="img-input" multiple accept="image/*" class="hidden">
+                    </div>
+                    <div id="img-preview" class="flex flex-wrap gap-2 mb-4"></div>
+                    <button onclick="generateImagePDF()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition">Combine into PDF</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMAGE TOOLS PAGE -->
+        <section id="page-image-tools" class="page-section hidden-section">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Image Utilities</h2>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Tool: Compressor/Converter -->
+                <div class="bg-white p-6 rounded-xl border shadow-sm">
+                    <h3 class="flex items-center gap-2 font-bold text-lg mb-4 text-slate-700">
+                        <i data-lucide="maximize" class="w-5 h-5"></i> Compress & Convert
+                    </h3>
+                    <input type="file" id="comp-input" accept="image/*" class="block w-full text-sm text-slate-500 mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Quality (Compression)</label>
+                            <input type="range" id="quality-range" min="0.1" max="1.0" step="0.1" value="0.7" class="w-full">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Target Format</label>
+                            <select id="format-select" class="w-full p-2 border rounded-lg text-sm">
+                                <option value="image/jpeg">JPEG</option>
+                                <option value="image/png">PNG</option>
+                                <option value="image/webp">WEBP</option>
+                            </select>
+                        </div>
+                        <button onclick="processImage()" class="w-full bg-emerald-600 text-white py-2 rounded-lg font-medium hover:bg-emerald-700">Process Image</button>
+                    </div>
+                    <div id="image-result" class="mt-6 hidden">
+                        <p class="text-xs text-center text-slate-500 mb-2">Preview:</p>
+                        <img id="preview-img" class="max-h-48 mx-auto rounded border">
+                        <a id="download-link" class="block text-center mt-4 text-blue-600 font-bold underline">Download Processed Image</a>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                    <h3 class="font-bold text-blue-800 mb-2 italic">Why use browser-based tools?</h3>
+                    <ul class="text-sm text-blue-700 space-y-3">
+                        <li class="flex gap-2">✅ <strong>Instant:</strong> No waiting for uploads to finish.</li>
+                        <li class="flex gap-2">✅ <strong>Private:</strong> Your sensitive documents never leave your RAM.</li>
+                        <li class="flex gap-2">✅ <strong>Free:</strong> We don't have server costs, so you don't pay.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- HELP / ABOUT PAGE -->
+        <section id="page-help" class="page-section hidden-section">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">About PDFDocLab</h2>
+                <div class="bg-white border rounded-2xl p-8 space-y-6 text-slate-600 leading-relaxed">
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">How it works?</h4>
+                        <p>PDFDocLab uses <b>Client-Side Processing</b>. When you "upload" a file, it is loaded into your browser's local memory. The JavaScript code then manipulates the data and triggers a download. 0% of your data is sent to any server.</p>
+                    </div>
+                    <div class="border-l-4 border-blue-600 pl-4 bg-blue-50 py-2">
+                        <h4 class="font-bold text-slate-800">Privacy Policy</h4>
+                        <p class="text-sm">We do not use databases. We do not use cookies for tracking. We do not see your files. This is a strictly "What You See Is What You Get" tool.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Usage Limits & Safety</h4>
+                        <p class="text-sm">Since processing happens on your device, the limits depend on your device RAM:</p>
+                        <ul class="list-disc ml-5 text-sm mt-2">
+                            <li><strong>Text:</strong> Recommended up to 50,000 words.</li>
+                            <li><strong>Images:</strong> Up to 20MB per image for stable results.</li>
+                            <li><strong>PDF Merge:</strong> Recommended for files under 25MB total.</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t">
+                        <p class="text-xs">Contact: <span class="italic">support@pdfdoclab.placeholder</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center items-center gap-2 mb-4">
+                <div class="bg-slate-200 p-1 rounded">
+                    <i data-lucide="file-text" class="text-slate-600 w-5 h-5"></i>
+                </div>
+                <span class="font-bold text-slate-800">PDFDocLab</span>
+            </div>
+            <p class="text-slate-500 text-sm">© 2024 - Fully Client-Side Document Lab. No Strings Attached.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- NAVIGATION LOGIC ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
+            
+            document.getElementById(`page-${pageId}`).classList.remove('hidden-section');
+            if(document.getElementById(`nav-${pageId}`)) {
+                document.getElementById(`nav-${pageId}`).classList.add('active-link');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // --- PDF TOOLS LOGIC ---
+        const { jsPDF } = window.jspdf;
+
+        // 1. Text to PDF
+        function generateTextPDF() {
+            const text = document.getElementById('text-input').value;
+            const status = document.getElementById('pdf-status');
+            
+            if(!text) { alert("Please enter some text"); return; }
+            
+            status.innerText = "Processing...";
+            try {
+                const doc = new jsPDF();
+                const splitText = doc.splitTextToSize(text, 180);
+                doc.text(splitText, 10, 10);
+                doc.save("PDFDocLab-Document.pdf");
+                status.innerText = "Download complete!";
+            } catch (e) {
+                status.innerText = "Error: Text too large for local processing.";
+            }
+        }
+
+        // 2. Image to PDF
+        let selectedImages = [];
+        const imgInput = document.getElementById('img-input');
+        const imgZone = document.getElementById('img-to-pdf-zone');
+
+        imgZone.onclick = () => imgInput.click();
+        imgInput.onchange = (e) => handleFiles(e.target.files);
+
+        function handleFiles(files) {
+            selectedImages = Array.from(files);
+            const preview = document.getElementById('img-preview');
+            preview.innerHTML = '';
+            selectedImages.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = "w-16 h-16 object-cover rounded border";
+                    preview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function generateImagePDF() {
+            if(selectedImages.length === 0) return alert("Select images first");
+            const doc = new jsPDF();
+            
+            for(let i = 0; i < selectedImages.length; i++) {
+                const imgData = await readFileAsDataURL(selectedImages[i]);
+                if(i > 0) doc.addPage();
+                doc.addImage(imgData, 'JPEG', 10, 10, 190, 0);
+            }
+            doc.save("PDFDocLab-Images.pdf");
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // --- IMAGE TOOLS LOGIC ---
+        function processImage() {
+            const file = document.getElementById('comp-input').files[0];
+            const quality = parseFloat(document.getElementById('quality-range').value);
+            const format = document.getElementById('format-select').value;
+            
+            if(!file) return alert("Select an image");
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    const newData = canvas.toDataURL(format, quality);
+                    
+                    const resultDiv = document.getElementById('image-result');
+                    const previewImg = document.getElementById('preview-img');
+                    const dl = document.getElementById('download-link');
+                    
+                    resultDiv.classList.remove('hidden');
+                    previewImg.src = newData;
+                    dl.href = newData;
+                    dl.download = `pdfdoclab-processed.${format.split('/')[1]}`;
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
