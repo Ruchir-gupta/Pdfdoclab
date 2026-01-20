@@ -223,22 +223,40 @@
         </div>
     </footer>
 
-    <script>
- function toggleMobileMenu() {
+ // --- MOBILE MENU TOGGLE ---
+        function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
         }
 
+        // --- NAVIGATION LOGIC ---
         function showPage(pageId) {
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
-            
-            document.getElementById(`page-${pageId}`).classList.remove('hidden-section');
-            if(document.getElementById(`nav-${pageId}`)) {
-                document.getElementById(`nav-${pageId}`).classList.add('active-link');
+            // 1. Saare sections ko chhupao
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.add('hidden-section');
+            });
+
+            // 2. Sirf chuney hue page ko dikhao
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden-section');
             }
+
+            // 3. Desktop menu links ka color badlo
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active-link');
+            });
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.add('active-link');
+            }
+
+            // 4. Page ke sabse upar scroll karo
             window.scrollTo(0, 0);
         }
-
+                    nk
         // --- PDF TOOLS LOGIC ---
         const { jsPDF } = window.jspdf;
 
