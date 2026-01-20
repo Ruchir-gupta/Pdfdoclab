@@ -25,6 +25,7 @@
 <body>
 
     <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="bg-white border-b sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -34,20 +35,27 @@
                     </div>
                     <span class="text-xl font-bold text-slate-800 tracking-tight">PDFDocLab</span>
                 </div>
+                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
                     <button onclick="showPage('home')" class="nav-link hover:text-blue-600" id="nav-home">Home</button>
                     <button onclick="showPage('pdf-tools')" class="nav-link hover:text-blue-600" id="nav-pdf">PDF Tools</button>
                     <button onclick="showPage('image-tools')" class="nav-link hover:text-blue-600" id="nav-image">Image Tools</button>
                     <button onclick="showPage('help')" class="nav-link hover:text-blue-600" id="nav-help">Help</button>
                 </div>
-                <div class="md:hidden">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden cursor-pointer" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-6 h-6 text-slate-600"></i>
                 </div>
             </div>
         </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b px-4 py-4 space-y-4 shadow-lg">
+            <button onclick="showPage('home'); toggleMobileMenu()" class="block w-full text-left text-slate-600 font-medium">Home</button>
+            <button onclick="showPage('pdf-tools'); toggleMobileMenu()" class="block w-full text-left text-slate-600 font-medium">PDF Tools</button>
+            <button onclick="showPage('image-tools'); toggleMobileMenu()" class="block w-full text-left text-slate-600 font-medium">Image Tools</button>
+            <button onclick="showPage('help'); toggleMobileMenu()" class="block w-full text-left text-slate-600 font-medium">Help</button>
+        </div>
     </nav>
-
-    <!-- Page Content Container -->
     <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 min-h-[80vh]">
         
         <!-- HOME PAGE -->
