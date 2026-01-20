@@ -223,7 +223,8 @@
         </div>
     </footer>
 
- // --- MOBILE MENU TOGGLE ---
+ <script>
+        // --- MOBILE MENU TOGGLE ---
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             if (menu) {
@@ -253,20 +254,24 @@
                 activeNav.classList.add('active-link');
             }
 
-            // 4. Page ke sabse upar scroll karo
+            // 4. Mobile menu ko band karo (agar khula ho)
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+            }
+
+            // 5. Page ke sabse upar scroll karo
             window.scrollTo(0, 0);
         }
-                    nk
+
         // --- PDF TOOLS LOGIC ---
         const { jsPDF } = window.jspdf;
 
-        // 1. Text to PDF
+        // Text to PDF function
         function generateTextPDF() {
             const text = document.getElementById('text-input').value;
             const status = document.getElementById('pdf-status');
-            
             if(!text) { alert("Please enter some text"); return; }
-            
             status.innerText = "Processing...";
             try {
                 const doc = new jsPDF();
@@ -275,89 +280,11 @@
                 doc.save("PDFDocLab-Document.pdf");
                 status.innerText = "Download complete!";
             } catch (e) {
-                status.innerText = "Error: Text too large for local processing.";
+                status.innerText = "Error: Too much text.";
             }
         }
 
-        // 2. Image to PDF
-        let selectedImages = [];
-        const imgInput = document.getElementById('img-input');
-        const imgZone = document.getElementById('img-to-pdf-zone');
-
-        imgZone.onclick = () => imgInput.click();
-        imgInput.onchange = (e) => handleFiles(e.target.files);
-
-        function handleFiles(files) {
-            selectedImages = Array.from(files);
-            const preview = document.getElementById('img-preview');
-            preview.innerHTML = '';
-            selectedImages.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = "w-16 h-16 object-cover rounded border";
-                    preview.appendChild(img);
-                }
-                reader.readAsDataURL(file);
-            });
-        }
-
-        async function generateImagePDF() {
-            if(selectedImages.length === 0) return alert("Select images first");
-            const doc = new jsPDF();
-            
-            for(let i = 0; i < selectedImages.length; i++) {
-                const imgData = await readFileAsDataURL(selectedImages[i]);
-                if(i > 0) doc.addPage();
-                doc.addImage(imgData, 'JPEG', 10, 10, 190, 0);
-            }
-            doc.save("PDFDocLab-Images.pdf");
-        }
-
-        function readFileAsDataURL(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (e) => resolve(e.target.result);
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // --- IMAGE TOOLS LOGIC ---
-        function processImage() {
-            const file = document.getElementById('comp-input').files[0];
-            const quality = parseFloat(document.getElementById('quality-range').value);
-            const format = document.getElementById('format-select').value;
-            
-            if(!file) return alert("Select an image");
-
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    
-                    const newData = canvas.toDataURL(format, quality);
-                    
-                    const resultDiv = document.getElementById('image-result');
-                    const previewImg = document.getElementById('preview-img');
-                    const dl = document.getElementById('download-link');
-                    
-                    resultDiv.classList.remove('hidden');
-                    previewImg.src = newData;
-                    dl.href = newData;
-                    dl.download = `pdfdoclab-processed.${format.split('/')[1]}`;
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // Initialize Icons
+        // Initialize Icons (Important for Mobile Menu Icon)
         lucide.createIcons();
     </script>
 </body>
