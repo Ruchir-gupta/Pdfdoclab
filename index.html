@@ -193,12 +193,12 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-slate-800">Usage Limits & Safety</h4>
-                        <p class="text-sm">Since processing happens on your device, the limits depend on your device RAM:</p>
-                        <ul class="list-disc ml-5 text-sm mt-2">
+                        <p class="text-smSince processing happens on your device, the limits depend on your device RAM:</p>
+                        <ul classdisc="list-disc ml-5 text-sm mt-2">
                             <li><strong>Text:</strong> Recommended up to 50,000 words.</li>
                             <li><strong>Images:</strong> Up to 20MB per image for stable results.</li>
                             <li><strong>PDF Merge:</strong> Recommended for files under 25MB total.</li>
-                        </ul>
+             functionnction         </ul>
                     </div>
                     <div class="pt-6 border-t">
                         <p class="text-sm font-bold text-slate-800 mb-1">Business Inquiries & Sponsorship:</p>
@@ -224,9 +224,12 @@
     </footer>
 
     <script>
-        // --- NAVIGATION LOGIC ---
+ function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
         function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden-section'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
             
             document.getElementById(`page-${pageId}`).classList.remove('hidden-section');
